@@ -1,23 +1,28 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import { routes } from './routes';
 
-import Navbar from './components/navbar';
-import Inicio from './containers/inicio';
-import TableInformation from './containers/table';
-import Comments from './containers/comments';
 
-
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Route path="/" component={Navbar} />
-        <Route exact path="/" component={Inicio} />
-        <Route exact path="/table" component={TableInformation} />
-        <Route exact path="/comments" component={Comments} />
-      </BrowserRouter>
-    </div>
-  );
+    <Router>
+      <Switch>
+        {routes.map((route, i) => (
+          <Route
+            path={route.path}
+            exact={route.exact}
+            key={i}
+            render={props => {
+              // pass the sub-routes down to keep nesting
+              return <route.component {...props} routes={route.routes} />
+            }}
+          />
+        ))}
+      </Switch>
+    </Router>
+  )
 }
-
-export default App;
