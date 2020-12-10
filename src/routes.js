@@ -1,7 +1,7 @@
 
 import Main from './components/Main/main';
 import { Home } from './views/Home/Home';
-import { TableInformation } from './views/TableInformation';
+import { Todos } from './views/Todos';
 import { Comments } from './views/Comments/Comments';
 
 export const routes = [
@@ -15,8 +15,8 @@ export const routes = [
         exact: true,
       },
       {
-        path: "/table",
-        component: TableInformation,
+        path: "/todos",
+        component: Todos,
         exact: true,
       },
       {

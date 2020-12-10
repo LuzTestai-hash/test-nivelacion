@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
-import { getInformationComments } from '../../utils/api';
+import commentsService from '../../services/comments';
 
-import Table from '../../components/TableGlobal/tableGlobal';
+import Table from '../../components/Table/table';
 
 export const Comments = () => {
   const [informationComments, setIsInformationComments] = useState([]);
 
   useEffect(() => {
-    getInformationComments().then((res) => {
-      setIsInformationComments(res.data)
-    })
+    commentsService.getInfo()
+      .then((res) => setIsInformationComments(res))
       .catch((err) => console.log(err));
   }, []);
 
@@ -33,7 +32,7 @@ export const Comments = () => {
   ]
 
   return (
-    <div class="container">
+    <div className="container">
       <Table name={"Comments"} information={informationComments} columns={columns} />
     </div >
   );
