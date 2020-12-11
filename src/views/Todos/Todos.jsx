@@ -36,7 +36,7 @@ export const Todos = () => {
 
   const searchForName = (e) => {
     setName(e)
-    e == "completed" ? setShowInput(false) : setShowInput(true)
+    e === "completed" ? setShowInput(false) : setShowInput(true)
   }
 
   const search = () => {

@@ -19,11 +19,26 @@ export const Comments = () => {
 
   const searchForName = (e) => {
     setName(e)
-    e == "completed" ? setShowInput(false) : setShowInput(true)
+    setShowInput(true)
   }
 
+
+
   const search = () => {
-    setFiltrados(informationComments.filter(obj => obj[name] == content))
+    if (name === "body") {
+      var arrMatch = []
+      informationComments.map(e => {
+        var stringWithOutEnter = e.body.replace(/\n|\r/g, " ")
+        if (e.body.includes(content)) {
+          arrMatch.push(e)
+        } else if (stringWithOutEnter === content) {
+          arrMatch.push(e)
+        }
+      })
+      setFiltrados(arrMatch)
+    } else {
+      setFiltrados(informationComments.filter(obj => obj[name] === content))
+    }
   }
 
 
