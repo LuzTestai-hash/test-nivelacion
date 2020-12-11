@@ -5,12 +5,26 @@ import Table from '../../components/Table/table';
 
 export const Comments = () => {
   const [informationComments, setIsInformationComments] = useState([]);
+  const [name, setName] = useState(null);
+  const [content, setContent] = useState(null);
+  const [filtrados, setFiltrados] = useState([]);
+  const [showInput, setShowInput] = useState(Boolean)
+
 
   useEffect(() => {
     commentsService.getInfo()
       .then((res) => setIsInformationComments(res))
       .catch((err) => console.log(err));
   }, []);
+
+  const searchForName = (e) => {
+    setName(e)
+    e == "completed" ? setShowInput(false) : setShowInput(true)
+  }
+
+  const search = () => {
+    setFiltrados(informationComments.filter(obj => obj[name] == content))
+  }
 
 
   const columns = [
@@ -33,7 +47,19 @@ export const Comments = () => {
 
   return (
     <div className="container">
-      <Table name={"Comments"} information={informationComments} columns={columns} />
+      <Table
+        title={"Comments"}
+        information={informationComments}
+        filtrados={filtrados}
+        columns={columns}
+        keyObj={name}
+        objContent={content}
+        searchForName={searchForName}
+        search={search}
+        showInput={showInput}
+        setContent={setContent}
+        name={name}
+      />
     </div >
   );
 }

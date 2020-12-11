@@ -1,7 +1,5 @@
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import { useEffect, useState } from 'react';
-var arr = []
 
 
 export default function TableInformation({ information, filtrados, columns, title, searchForName, search, showInput, setContent, name }) {
@@ -25,12 +23,12 @@ export default function TableInformation({ information, filtrados, columns, titl
             <div className="col-6">
               {showInput ?
                 <div className="d-flex">
-                  <input className="form-control" type="text" name="exact" onChange={(e) => setContent(e.target.value)}></input>
+                  <input className="form-control" type="textarea" name="exact" onChange={(e) => setContent(e.target.value)}></input>
                   <button className="btn btn-success ml-3" onClick={search}>BUSCAR</button>
                 </div>
                 :
                 <div className="d-flex">
-                  <select className="custom-select p-2" name="search" id="search" onClick={(e) => { e.target.value == "false" ? setContent(false) : setContent(true) }} >
+                  <select className="custom-select p-2" name="search" id="search" onClick={(e) => { e.target.value === "false" ? setContent(false) : setContent(true) }} >
                     <option value="false">false</option>
                     <option value="true">true</option>
                   </select>
@@ -50,7 +48,7 @@ export default function TableInformation({ information, filtrados, columns, titl
         </div>
         <BootstrapTable
           keyField="name"
-          data={!name || name == "todos" ? information : filtrados}
+          data={!name || name === "todos" ? information : filtrados}
           columns={columns}
           pagination={paginationFactory()} />
 
