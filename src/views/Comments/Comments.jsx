@@ -29,11 +29,7 @@ export const Comments = () => {
       var arrMatch = []
       informationComments.map(e => {
         var stringWithOutEnter = e.body.replace(/\n|\r/g, " ")
-        if (e.body.includes(content)) {
-          arrMatch.push(e)
-        } else if (stringWithOutEnter === content) {
-          arrMatch.push(e)
-        }
+        if (e.body.includes(content) || stringWithOutEnter === content) { arrMatch.push(e) }
       })
       setFiltrados(arrMatch)
     } else {
