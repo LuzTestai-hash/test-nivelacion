@@ -33,7 +33,7 @@ export const Comments = () => {
       })
       setFiltrados(arrMatch)
     } else {
-      setFiltrados(informationComments.filter(obj => obj[name] === content))
+      setFiltrados(informationComments.filter(obj => obj[name] == content))
     }
   }
 
