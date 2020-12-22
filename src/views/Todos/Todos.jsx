@@ -1,22 +1,17 @@
-import { useState, useEffect } from 'react';
-import todosService from '../../services/todos';
-
-
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTodos } from '../../redux/actions/getPosts';
 import Table from '../../components/Table/table';
 
 export const Todos = () => {
-  const [information, setIsInformation] = useState([]);
-  const [name, setName] = useState(null);
-  const [content, setContent] = useState(null);
-  const [filtrados, setFiltrados] = useState([]);
-  const [showInput, setShowInput] = useState(Boolean)
+  const dispatch = useDispatch();
+  const result = useSelector((state) => state.posts.todos);
 
 
   useEffect(() => {
-    todosService.getInfo()
-      .then((res) => setIsInformation(res))
-      .catch((err) => console.log(err));
-  }, []);
+    dispatch(fetchTodos())
+  }, [])
+
 
 
   const columns = [
@@ -34,30 +29,14 @@ export const Todos = () => {
     }
   ]
 
-  const searchForName = (e) => {
-    setName(e)
-    e === "completed" ? setShowInput(false) : setShowInput(true)
-  }
-
-  const search = () => {
-    setFiltrados(information.filter(obj => obj[name] == content))
-  }
-
 
   return (
     <div className="container">
 
-      <Table title={"Todos"}
-        information={information}
-        filtrados={filtrados}
+      <Table
+        title={"Todos"}
         columns={columns}
-        keyObj={name}
-        objContent={content}
-        searchForName={searchForName}
-        search={search}
-        showInput={showInput}
-        setContent={setContent}
-        name={name} />
+        information={result} />
     </div >
   );
 }

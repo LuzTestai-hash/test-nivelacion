@@ -3,6 +3,7 @@ import Main from './components/Main/main';
 import { Home } from './views/Home/Home';
 import { Todos } from './views/Todos';
 import { Comments } from './views/Comments/Comments';
+import { IndividualComments } from './views/IndividualComments/individualComments';
 
 export const routes = [
   {
@@ -23,6 +24,14 @@ export const routes = [
         path: "/comments",
         component: Comments,
         exact: true,
+      },
+      {
+        path: "/comments/:id",
+        component: IndividualComments
+      },
+      {
+        path: "/todos/:id",
+        component: IndividualComments
       }
     ]
   },

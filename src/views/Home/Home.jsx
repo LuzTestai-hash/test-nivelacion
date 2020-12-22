@@ -1,5 +1,6 @@
 
 export const Home = () => {
+
   return (
     <div className="container justify-content-center">
       <div className="d-flex flex-column w-80 mt-5 justify-content-center  align-items-center">
