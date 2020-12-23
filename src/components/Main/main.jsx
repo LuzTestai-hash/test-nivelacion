@@ -17,9 +17,10 @@ const main = ({ routes }) => {
               exact={route.exact}
               path={route.path}
               key={i}
+              meta={route.meta}
               render={props => {
                 // pass the sub-routes down to keep nesting
-                return <route.component  {...props} routes={route.routes} />
+                return <route.component  {...props} routes={route.routes} meta={route.meta} />
               }}
             />
           ))}

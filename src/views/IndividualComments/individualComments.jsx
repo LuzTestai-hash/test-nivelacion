@@ -1,31 +1,39 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
-import { fetchPostComments, fetchPostTodos } from '../../redux/actions/getPosts';
+import { getComment, getTodo } from '../../redux/actions';
 
 export const IndividualComments = (props) => {
   const dispatch = useDispatch();
-  const result = useSelector((state) => state.posts.post);
+  const comment = useSelector((state) => state.comment.comment);
+  const todo = useSelector((state) => state.todo.todo);
   const { state } = useLocation();
   const { id } = useParams();
+  const [result, setResult] = useState({})
+
+  useEffect(() => {
+    if (state === 'comments') {
+      setResult(comment)
+    } else {
+      setResult(todo)
+    }
+  }, [todo, comment, state])
 
 
   useEffect(() => {
-    const getPostsComments = async () => {
+    const getData = async () => {
       try {
-        await dispatch(fetchPostComments(id))
+        if (state === 'comments') {
+          await dispatch(getComment(id))
+        } else {
+          await dispatch(getTodo(id))
+        }
       } catch (err) {
         console.log(err)
       }
     }
-    const getPostsTodos = async () => {
-      try {
-        await dispatch(fetchPostTodos(id))
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    state === "comments" ? getPostsComments() : getPostsTodos()
+
+    getData()
   }, [state, dispatch, id])
 
   return (

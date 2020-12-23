@@ -1,22 +1,22 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTodos } from '../../redux/actions/getPosts';
+import { getTodos } from '../../redux/actions';
 import Table from '../../components/Table/table';
 
-export const Todos = () => {
+export const Todos = (props) => {
   const dispatch = useDispatch();
-  const result = useSelector((state) => state.posts.todos);
+  const result = useSelector((state) => state.todo.todos);
 
 
   useEffect(() => {
-    const getTodos = async () => {
+    const setTodos = async () => {
       try {
-        await dispatch(fetchTodos())
+        await dispatch(getTodos())
       } catch (err) {
         console.log(err)
       }
     }
-    getTodos()
+    setTodos()
   }, [dispatch])
 
 
@@ -42,7 +42,9 @@ export const Todos = () => {
       <Table
         title={"Todos"}
         columns={columns}
-        information={result} />
+        information={result}
+        {...props}
+      />
     </div>
   );
 }

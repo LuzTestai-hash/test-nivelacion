@@ -1,23 +1,23 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from '../../components/Table/table';
-import { fetchComments } from '../../redux/actions/getPosts';
+import { getComments } from '../../redux/actions';
 
 
-export const Comments = () => {
+export const Comments = (props) => {
   const dispatch = useDispatch();
-  const result = useSelector((state) => state.posts.comments);
+  const result = useSelector((state) => state.comment.comments);
 
 
   useEffect(() => {
-    const getComments = async () => {
+    const setComments = async () => {
       try {
-        await dispatch(fetchComments())
+        await dispatch(getComments())
       } catch (err) {
         console.log(err)
       }
     }
-    getComments()
+    setComments()
   }, [dispatch])
 
   const columns = [
@@ -44,6 +44,7 @@ export const Comments = () => {
         title={"Comments"}
         columns={columns}
         information={result}
+        {...props}
       />
     </div>
   );

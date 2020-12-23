@@ -5,8 +5,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import { useHistory } from 'react-router-dom';
 
 
-export default function TableInformation({ columns, title, information }) {
-
+export default function TableInformation({ columns, title, information, meta, ...rest }) {
   const [name, setName] = useState(columns[0].dataField);
   const [filterData, setFilterData] = useState([]);
   const history = useHistory();
@@ -33,7 +32,7 @@ export default function TableInformation({ columns, title, information }) {
   }
   const rowEvents = {
     onClick: (e, row) => {
-      information[0].userId ? history.push({ state: "todos", pathname: `/todos/${row.id}` }) : history.push({ state: "comments", pathname: `/comments/${row.id}` })
+      meta.name === 'todos' ? history.push({ state: "todos", pathname: `/todos/${row.id}` }) : history.push({ state: "comments", pathname: `/comments/${row.id}` })
     }
   }
   return (
