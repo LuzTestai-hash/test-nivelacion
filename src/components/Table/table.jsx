@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import { useHistory } from 'react-router-dom';
 
 
 export default function TableInformation({ columns, title, information }) {
 
   const [name, setName] = useState(columns[0].dataField);
   const [filterData, setFilterData] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     setFilterData(information)
@@ -23,6 +25,7 @@ export default function TableInformation({ columns, title, information }) {
           return data[name].replace(/\n|\r/g, " ").toLowerCase().includes(search.toLowerCase())
         }
         if (typeof data[name] === 'boolean') return data[name].toString().toLowerCase() === search.toLowerCase()
+        return null;
       })
       console.log("filterData:", _filterData)
       setFilterData(_filterData)
@@ -30,10 +33,9 @@ export default function TableInformation({ columns, title, information }) {
   }
   const rowEvents = {
     onClick: (e, row) => {
-      information[0].userId ? window.location = `/todos/${row.id}` : window.location = `/comments/${row.id}`
+      information[0].userId ? history.push({ state: "todos", pathname: `/todos/${row.id}` }) : history.push({ state: "comments", pathname: `/comments/${row.id}` })
     }
   }
-
   return (
     <div className="container mt-5 mb-5">
       {information
@@ -41,8 +43,8 @@ export default function TableInformation({ columns, title, information }) {
           <div className="row mt-5">
             <div className="col-6">
               <select className="custom-select p-2" name="search" id="search" onChange={(e) => setName(e.target.value)} >
-                {columns.map((title) => {
-                  return (<option value={title.dataField}>{title.dataField}</option>)
+                {columns.map((title, index) => {
+                  return (<option key={index} value={title.dataField}>{title.dataField}</option>)
                 })}
               </select>
 
@@ -52,8 +54,6 @@ export default function TableInformation({ columns, title, information }) {
                 <input className="form-control" type="textarea" name="exact" onChange={(e) => handlefilterData(e.target.value)}></input>
               </div>
             </div>
-
-
           </div>
 
 
@@ -62,12 +62,11 @@ export default function TableInformation({ columns, title, information }) {
           </div>
           <BootstrapTable
             hover
-            keyField="name"
+            keyField="id"
             data={filterData}
             columns={columns}
             pagination={paginationFactory()}
             rowEvents={rowEvents} />
-
 
         </div>
         : <div class="container">

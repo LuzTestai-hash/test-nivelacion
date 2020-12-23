@@ -22,23 +22,27 @@ export const fetchComments = () => dispatch =>
   axios
     .get(`${config.apiURL}/comments`)
     .then(res => res.data)
-    .then(comments => dispatch(allComments(comments)));
+    .then(comments => dispatch(allComments(comments)))
+    .catch(err => { throw err })
 
 export const fetchPostComments = id => dispatch =>
   axios
     .get(`${config.apiURL}/comments/${id}`)
     .then(res => res.data)
-    .then(post => dispatch(postIndividual(post)));
+    .then(post => dispatch(postIndividual(post)))
+    .catch(err => { throw err })
 
 export const fetchTodos = () => dispatch =>
   axios
     .get(`${config.apiURL}/todos`)
     .then(res => res.data)
-    .then(todos => dispatch(allTodos(todos)));
+    .then(todos => dispatch(allTodos(todos)))
+    .catch(err => { throw err })
 
 
 export const fetchPostTodos = id => dispatch =>
   axios
     .get(`${config.apiURL}/todos/${id}`)
     .then(res => res.data)
-    .then(post => dispatch(postIndividual(post)));
+    .then(post => dispatch(postIndividual(post)))
+    .catch(err => { throw err })

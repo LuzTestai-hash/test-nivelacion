@@ -10,8 +10,15 @@ export const Comments = () => {
 
 
   useEffect(() => {
-    dispatch(fetchComments())
-  }, [])
+    const getComments = async () => {
+      try {
+        await dispatch(fetchComments())
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getComments()
+  }, [dispatch])
 
   const columns = [
     {
@@ -29,8 +36,8 @@ export const Comments = () => {
     {
       dataField: "body", text: "body"
     }
-  ]
 
+  ]
   return (
     <div className="container">
       <Table
@@ -38,7 +45,7 @@ export const Comments = () => {
         columns={columns}
         information={result}
       />
-    </div >
+    </div>
   );
 }
 

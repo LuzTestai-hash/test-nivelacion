@@ -7,7 +7,7 @@ const inicialState = {
 
 };
 
-export default (state = inicialState, action) => {
+const posts = (state = inicialState, action) => {
   switch (action.type) {
     case ALL_COMMENTS:
       return { ...state, comments: action.comments };
@@ -19,3 +19,5 @@ export default (state = inicialState, action) => {
       return state;
   }
 };
+
+export default posts;

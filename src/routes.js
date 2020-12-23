@@ -1,8 +1,8 @@
 
 import Main from './components/Main/main';
-import { Home } from './views/Home/Home';
+import { Home } from './views/Home';
 import { Todos } from './views/Todos';
-import { Comments } from './views/Comments/Comments';
+import { Comments } from './views/Comments';
 import { IndividualComments } from './views/IndividualComments/individualComments';
 
 export const routes = [

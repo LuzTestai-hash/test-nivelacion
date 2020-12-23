@@ -9,8 +9,15 @@ export const Todos = () => {
 
 
   useEffect(() => {
-    dispatch(fetchTodos())
-  }, [])
+    const getTodos = async () => {
+      try {
+        await dispatch(fetchTodos())
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getTodos()
+  }, [dispatch])
 
 
 
@@ -32,11 +39,10 @@ export const Todos = () => {
 
   return (
     <div className="container">
-
       <Table
         title={"Todos"}
         columns={columns}
         information={result} />
-    </div >
+    </div>
   );
 }

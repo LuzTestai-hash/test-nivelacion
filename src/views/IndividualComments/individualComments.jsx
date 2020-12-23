@@ -1,14 +1,32 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
 import { fetchPostComments, fetchPostTodos } from '../../redux/actions/getPosts';
 
 export const IndividualComments = (props) => {
   const dispatch = useDispatch();
   const result = useSelector((state) => state.posts.post);
-  console.log(result)
+  const { state } = useLocation();
+  const { id } = useParams();
+
+
   useEffect(() => {
-    window.location.href.includes("comments") ? dispatch(fetchPostComments(props.match.params.id)) : dispatch(fetchPostTodos(props.match.params.id));
-  }, [])
+    const getPostsComments = async () => {
+      try {
+        await dispatch(fetchPostComments(id))
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    const getPostsTodos = async () => {
+      try {
+        await dispatch(fetchPostTodos(id))
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    state === "comments" ? getPostsComments() : getPostsTodos()
+  }, [state, dispatch, id])
 
   return (
     <div className="Container">
@@ -19,7 +37,7 @@ export const IndividualComments = (props) => {
         <div className="card-body">
           <h5 className="card-title">ID : {result.id}</h5>
           <p className="card-text">{result.body ? `BODY : ${result.body}` : `COMPLETED : ${result.completed + ""}`}</p>
-          <a href="#" className="btn btn-primary"> {result.postId ? `POST ID : ${result.postId}` : `USER ID : ${result.userId}`}</a>
+          <button className="btn btn-primary"> {result.postId ? `POST ID : ${result.postId}` : `USER ID : ${result.userId}`}</button>
         </div>
         {result.email ?
           <div className="card-footer text-muted">
